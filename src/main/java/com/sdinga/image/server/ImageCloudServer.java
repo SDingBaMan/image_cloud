@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 @Service
 public class ImageCloudServer implements InitializingBean {
@@ -26,6 +27,30 @@ public class ImageCloudServer implements InitializingBean {
 
     public List<ImageCloud> getImageClouds() {
         return imageClouds;
+    }
+
+    /**
+     * 通过 权重获取仓库信息
+     *
+     * @return 图片仓库配置信息
+     */
+    public ImageCloud getImageCloudByWeight() {
+        Random random = new Random();
+        Integer id = weightList.get(random.nextInt());
+        return getImageCloudMap().get(id);
+    }
+
+    /**
+     * 通过 Id 获取仓库信息
+     *
+     * @return 图片仓库配置信息
+     */
+    public ImageCloud getImageCloudById(Integer id) {
+        return getImageCloudMap().get(id);
+    }
+
+    public List<Integer> getWeightList() {
+        return weightList;
     }
 
     public Map<Integer, ImageCloud> getImageCloudMap() {
@@ -48,17 +73,20 @@ public class ImageCloudServer implements InitializingBean {
                 ImageCloud imageCloud = new ImageCloud();
                 Integer id = bean.getInteger("id");
                 imageCloud.setId(id);
-                Integer weight = bean.getInteger("weight");
-                for (Integer integer = 0; integer < weight; integer++) {
+                imageCloud.setDb(bean.getString("db"));
+
+                JSONObject configObject = bean.getJSONObject("config");
+                Integer weight = configObject.getInteger("weight");
+                for (Integer j = 0; j < weight; j++) {
                     weightList.add(id);
                 }
                 imageCloud.setWeight(weight);
                 Config config = new Config();
-                config.setAk(bean.getString("ak"));
-                config.setSk(bean.getString("sk"));
-                config.setDb(bean.getString("db"));
-                config.setTable(bean.getString("table"));
-                config.setBaseUrl(bean.getString("baseUrl"));
+                config.setAk(configObject.getString("ak"));
+                config.setSk(configObject.getString("sk"));
+                config.setTable(configObject.getString("table"));
+                config.setAccount(configObject.getString("account"));
+                config.setBaseUrl(configObject.getString("baseUrl"));
                 imageCloud.setConfig(config);
                 imageClouds.add(imageCloud);
             }

@@ -4,14 +4,33 @@ public class ImageCloud {
     public ImageCloud() {
     }
 
+    /**
+     * id
+     */
     private Integer id;
+    /**
+     * 相当于数据库，用于处理一个项目下 同一个账户多个 bucket （table） 空间
+     */
+    private String db;
+    /**
+     * 权重
+     */
     private Integer weight;
+    /**
+     * 配置参数
+     */
     private Config config;
-
-
 
     public Integer getId() {
         return id;
+    }
+
+    public String getDb() {
+        return db;
+    }
+
+    public void setDb(String db) {
+        this.db = db;
     }
 
     public void setId(Integer id) {
