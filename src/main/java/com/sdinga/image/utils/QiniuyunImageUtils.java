@@ -44,7 +44,7 @@ public class QiniuyunImageUtils {
      */
     public String getUpToken() {
         StringMap putPolicy = new StringMap();
-        putPolicy.put("returnBody", "{\"key\":\"$(key)\",\"hash\":\"$(etag)\",\"bucket\":\"$(bucket)\",\"fsize\":$(fsize)}");
+        putPolicy.put("returnBody", "{\"key\":\"$(key)\",\"hash\":\"$(etag)\",\"bucket\":\"$(bucket)\",\"fsize\":$(fsize),\"mimeType\":$(mimeType)}");
         return authInstance().uploadToken(getBuckename(), null, 3600L, putPolicy);
     }
 

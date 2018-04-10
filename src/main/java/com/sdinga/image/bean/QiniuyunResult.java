@@ -6,8 +6,17 @@ public class QiniuyunResult {
     private String key;
     private String bucket;
     private String fsize;
+    private String mimeType;
 
     public QiniuyunResult() {
+    }
+
+    public String getMimeType() {
+        return mimeType;
+    }
+
+    public void setMimeType(String mimeType) {
+        this.mimeType = mimeType;
     }
 
     public String getBucket() {

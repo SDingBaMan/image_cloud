@@ -61,6 +61,8 @@ image.cloud.config的值（用于解决处理分布式图像存储选择的）
      hashCode 云返回的hashkey
      key 对于云的文件key
      db 填写值
+{"imageResult":{"baseUrl":"http://oqdzomx3f.bkt.clouddn.com","db":"db3","fsize":"63021","hashCode":"FmsHApRZ3NOzkFHLfcWsJGN7mfwU","id":333,"key":"nihaowoshixinren3","table":"news-image","zone":"zone0"}}
+{"imageResult":{"baseUrl":"http://oqdzomx3f.bkt.clouddn.com","db":"db3","fsize":"63021","hashCode":"FmsHApRZ3NOzkFHLfcWsJGN7mfwU","id":333,"key":"nihaowoshixinren4","table":"news-image","zone":"zone0"}}
 
 
 注意： 分 布 式处理图片存储的话，hashCode可能不唯一，需要联合索引。

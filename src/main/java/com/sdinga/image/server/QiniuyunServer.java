@@ -6,9 +6,12 @@ import com.sdinga.image.bean.ImageCloud;
 import com.sdinga.image.bean.ImageResult;
 import com.sdinga.image.bean.QiniuyunResult;
 import com.sdinga.image.bean.Result;
+import com.sdinga.image.utils.QiniuyunEtag;
 import com.sdinga.image.utils.QiniuyunImageUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -21,6 +24,7 @@ import java.io.InputStream;
  */
 @Service
 public class QiniuyunServer {
+    private static final Logger LOGGER = LoggerFactory.getLogger(QiniuyunServer.class);
 
     @Resource
     private ImageCloudServer imageCloudServer;
@@ -42,6 +46,35 @@ public class QiniuyunServer {
         byte[] fileByte = IOUtils.toByteArray(file);
         String result = QiniuyunImageUtils.getQiniuyunUtils(imageCloud).upload(fileByte, key);
         return JSONObject.toJSONString(packageResult(imageCloud, packageImageQiniuyunResult(result)));
+    }
+
+    public String uploadDefaultKey(byte[] file, String db) {
+        return upload(file, null, db);
+    }
+
+    public String uploadDefaultKey(File file, String db) throws IOException {
+        return upload(file, null, db);
+    }
+
+    public String uploadDefaultKey(InputStream file, String db) throws IOException {
+        byte[] fileByte = IOUtils.toByteArray(file);
+        return upload(file, null, db);
+    }
+
+    public String upload(byte[] file) {
+        String key = QiniuyunEtag.data(file);
+        return upload(file, key, MainConstants.DEFAULT_DB);
+    }
+
+    public String upload(File file) throws IOException {
+        String key = QiniuyunEtag.file(file);
+        return upload(file, key, MainConstants.DEFAULT_DB);
+    }
+
+    public String upload(InputStream file) throws IOException {
+        byte[] fileByte = IOUtils.toByteArray(file);
+        String key = QiniuyunEtag.data(fileByte);
+        return upload(file, key, MainConstants.DEFAULT_DB);
     }
 
     public String upload(byte[] file, String key) {
@@ -102,6 +135,7 @@ public class QiniuyunServer {
                 imageResult.setHashCode(qiniuyunResult.getHash());
                 imageResult.setFsize(qiniuyunResult.getFsize());
             } catch (Exception e) {
+                LOGGER.error("error_{}", e);
                 imageResult.setMessage(result);
             }
         }
@@ -116,6 +150,9 @@ public class QiniuyunServer {
         imageResult.setTable(imageCloud.getConfig().getTable());
         imageResult.setBaseUrl(imageCloud.getConfig().getBaseUrl());
         imageResult.setZone(imageCloud.getConfig().getZone());
+        if (StringUtils.isNotEmpty(imageResult.getKey())) {
+            imageResult.setUrl(imageCloud.getConfig().getBaseUrl() + imageResult.getKey());
+        }
         resultObject.setImageResult(imageResult);
         return resultObject;
     }
