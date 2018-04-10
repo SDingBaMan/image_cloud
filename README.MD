@@ -8,6 +8,7 @@ image.cloud.config的值（用于解决处理分布式图像存储选择的）
            		"id": 111,
            		"db": "db1",
            		"config": {
+           		    "zone":"zone0",
            			"table": "table1",
            			"ak": "ak",
            			"sk": "sk",
@@ -18,6 +19,7 @@ image.cloud.config的值（用于解决处理分布式图像存储选择的）
            		"id": 222,
            		"db": "db2",
            		"config": {
+           		    "zone":"zone0",
            			"table": "table2",
            			"ak": "ak",
            			"sk": "sk",
@@ -28,6 +30,7 @@ image.cloud.config的值（用于解决处理分布式图像存储选择的）
            		"id": 333,
            		"db": "db3",
            		"config": {
+           		    "zone":"zone0",
            			"table": "table3",
            			"ak": "ak",
            			"sk": "sk",
@@ -49,7 +52,7 @@ image.cloud.config的值（用于解决处理分布式图像存储选择的）
       db 必填，相当于数据库，用于分组，主要解决一个应用程序多个bucket的分布式处理，
               多个不同类型的bucket属于不同的db, 一个db下为相同的bucket（包括分布式空间）
                如果 bd不设置 默认为 null (建议设置值)
-   
+      zone 必须填写, 参考Enum
    
 返回参数
    
@@ -70,3 +73,6 @@ image.cloud.config的值（用于解决处理分布式图像存储选择的）
 
 预期 ： 1 实现分布式数据配置 ok
        2 实现多bucket分布式配置 ok  (通过设置db,来实现多个项目（一个项目多个仓库（多个table））的功能)
+       
+下一步：
+       1 修改QiniuyunServer 成为一个 统一的入口,接入更多的不同类型的图片仓库
