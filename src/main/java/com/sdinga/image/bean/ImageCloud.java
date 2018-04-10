@@ -1,5 +1,7 @@
 package com.sdinga.image.bean;
 
+import com.sdinga.image.Enum.MainConstants;
+
 public class ImageCloud {
     public ImageCloud() {
     }
@@ -11,7 +13,7 @@ public class ImageCloud {
     /**
      * 相当于数据库，用于处理一个项目下 同一个账户多个 bucket （table） 空间
      */
-    private String db;
+    private String db = MainConstants.DEFAULT_DB;
     /**
      * 权重
      */

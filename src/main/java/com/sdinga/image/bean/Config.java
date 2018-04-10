@@ -7,8 +7,17 @@ public class Config {
     private String ak;
     private String sk;
     private String baseUrl;
+    private String zone;
 
     public Config() {
+    }
+
+    public String getZone() {
+        return zone;
+    }
+
+    public void setZone(String zone) {
+        this.zone = zone;
     }
 
     public String getAccount() {

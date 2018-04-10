@@ -27,7 +27,7 @@
     <name>image_cloud</name>
     <groupId>com.sdinga.image</groupId>
     <artifactId>image_cloud</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.0.1</version>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -70,7 +70,13 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>3.4</version>
+            <version>3.6</version>
+        </dependency>
+        <!--compile group: 'org.apache.commons', name: 'commons-collections4', version:'4.1'-->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+            <version>4.1</version>
         </dependency>
         <!--compile group: 'org.apache.shiro', name: 'shiro-core', version: '1.4.0-RC2'-->
         <!--<dependency>-->
@@ -93,7 +99,7 @@
         <dependency>
             <groupId>com.qiniu</groupId>
             <artifactId>qiniu-java-sdk</artifactId>
-            <version>[7.0.0, 7.1.99]</version>
+            <version>[7.2.0, 7.2.99]</version>
         </dependency>
     </dependencies>
 

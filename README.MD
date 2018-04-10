@@ -6,8 +6,8 @@ image.cloud.config的值（用于解决处理分布式图像存储选择的）
 {
            	"imagecloud": [{
            		"id": 111,
+           		"db": "db1",
            		"config": {
-           			"db": "db1",
            			"table": "table1",
            			"ak": "ak",
            			"sk": "sk",
@@ -16,8 +16,8 @@ image.cloud.config的值（用于解决处理分布式图像存储选择的）
                 "weight":1
            	}, {
            		"id": 222,
+           		"db": "db2",
            		"config": {
-           			"db": "db2",
            			"table": "table2",
            			"ak": "ak",
            			"sk": "sk",
@@ -26,8 +26,8 @@ image.cloud.config的值（用于解决处理分布式图像存储选择的）
                 "weight":1
            	}, {
            		"id": 333,
+           		"db": "db3",
            		"config": {
-           			"db": "db3",
            			"table": "table3",
            			"ak": "ak",
            			"sk": "sk",
@@ -41,26 +41,30 @@ image.cloud.config的值（用于解决处理分布式图像存储选择的）
 配置参数
 
       id 仓库id 必填   
-      db 建议账户名称    
+      account 建议账户名称    
       table 对于云 bucket name 必填   
       ak 必填   
       sk 必填 
       baseUrl bucket 请求前缀url
-   
+      db 必填，相当于数据库，用于分组，主要解决一个应用程序多个bucket的分布式处理，
+              多个不同类型的bucket属于不同的db, 一个db下为相同的bucket（包括分布式空间）
+               如果 bd不设置 默认为 null (建议设置值)
    
    
 返回参数
    
      id 仓库id 
-     db 返回填写值
+     account 返回填写值
      table 对于云 bucket name 
      baseUrl bucket 请求前缀url   
      url 真实url
      hashCode 云返回的hashkey
      key 对于云的文件key
+     db 填写值
 
 
 注意： 分 布 式处理图片存储的话，hashCode可能不唯一，需要联合索引。
+      如果 bd不设置 默认为 null 
 
 预期 ： 1 实现分布式数据配置
        2 实现多bucket分布式配置

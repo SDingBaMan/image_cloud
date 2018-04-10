@@ -1,11 +1,15 @@
 package com.sdinga.image.utils;
 
 import com.qiniu.common.QiniuException;
+import com.qiniu.common.Zone;
 import com.qiniu.http.Response;
 import com.qiniu.storage.BucketManager;
+import com.qiniu.storage.Configuration;
 import com.qiniu.storage.UploadManager;
 import com.qiniu.storage.model.FileInfo;
 import com.qiniu.util.Auth;
+import com.qiniu.util.StringMap;
+import com.sdinga.image.Enum.ZoneQ;
 import com.sdinga.image.bean.ImageCloud;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,7 +43,9 @@ public class QiniuyunImageUtils {
      * @return token
      */
     public String getUpToken() {
-        return authInstance().uploadToken(getBuckename());
+        StringMap putPolicy = new StringMap();
+        putPolicy.put("returnBody", "{\"key\":\"$(key)\",\"hash\":\"$(etag)\",\"bucket\":\"$(bucket)\",\"fsize\":$(fsize)}");
+        return authInstance().uploadToken(getBuckename(), null, 3600L, putPolicy);
     }
 
     /**
@@ -59,7 +65,8 @@ public class QiniuyunImageUtils {
      * @return info
      */
     public String upload(byte[] file, String key) {
-        UploadManager uploadManager = new UploadManager();// 创建上传对象
+        Configuration cfg = new Configuration(getZone());
+        UploadManager uploadManager = new UploadManager(cfg);// 创建上传对象
         try {
             Response res = uploadManager.put(file, key, getUpToken());
             return res.bodyString();
@@ -70,7 +77,8 @@ public class QiniuyunImageUtils {
     }
 
     public String upload(File file, String key) {
-        UploadManager uploadManager = new UploadManager();// 创建上传对象
+        Configuration cfg = new Configuration(getZone());
+        UploadManager uploadManager = new UploadManager(cfg);// 创建上传对象
         try {
             Response res = uploadManager.put(file, key, getUpToken());
             return res.bodyString();
@@ -85,7 +93,8 @@ public class QiniuyunImageUtils {
      */
     public void deleteImg(String key) {
         // 实例化一个 bucketManage
-        BucketManager bucketManager = new BucketManager(authInstance());
+        Configuration cfg = new Configuration(getZone());
+        BucketManager bucketManager = new BucketManager(authInstance(), cfg);
         try {
             bucketManager.delete(getBuckename(), key);
         } catch (QiniuException e) {
@@ -97,7 +106,8 @@ public class QiniuyunImageUtils {
      * 通过 key 获取 hash 值
      */
     public String getHashToKey(String key) {
-        BucketManager bucketManager = new BucketManager(authInstance());
+        Configuration cfg = new Configuration(getZone());
+        BucketManager bucketManager = new BucketManager(authInstance(), cfg);
         try {
             FileInfo info = bucketManager.stat(getBuckename(), key);
             return info.hash;
@@ -126,6 +136,14 @@ public class QiniuyunImageUtils {
 
     private String getSk() {
         return this.imageCloud.getConfig().getSk();
+    }
+
+    private String getZoneName() {
+        return this.imageCloud.getConfig().getZone();
+    }
+
+    private Zone getZone() {
+        return ZoneQ.getZone(getZoneName()).getZone();
     }
 
     public String getBaseUrl() {

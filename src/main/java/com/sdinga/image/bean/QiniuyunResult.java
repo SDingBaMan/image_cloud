@@ -4,6 +4,27 @@ public class QiniuyunResult {
 
     private String hash;
     private String key;
+    private String bucket;
+    private String fsize;
+
+    public QiniuyunResult() {
+    }
+
+    public String getBucket() {
+        return bucket;
+    }
+
+    public void setBucket(String bucket) {
+        this.bucket = bucket;
+    }
+
+    public String getFsize() {
+        return fsize;
+    }
+
+    public void setFsize(String fsize) {
+        this.fsize = fsize;
+    }
 
     public String getHash() {
         return hash;

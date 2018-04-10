@@ -1,16 +1,54 @@
 package com.sdinga.image.bean;
 
+import com.sdinga.image.Enum.MainConstants;
+
 public class ImageResult {
     private Integer id;
-    private String db;
+    private String db = MainConstants.DEFAULT_DB;
     private String table;
     private String baseUrl;
     private String url;
     private String hashCode;
     private String account;
     private String key;
+    private String zone;
+    private String fsize;
+    private String token;
+    private String message;
 
     public ImageResult() {
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public String getFsize() {
+        return fsize;
+    }
+
+    public void setFsize(String fsize) {
+        this.fsize = fsize;
+    }
+
+    public String getZone() {
+        return zone;
+    }
+
+    public void setZone(String zone) {
+        this.zone = zone;
     }
 
     public String getAccount() {
