@@ -27,7 +27,7 @@ public class QiniuyunServer {
     private static final Logger LOGGER = LoggerFactory.getLogger(QiniuyunServer.class);
 
     @Resource
-    private ImageCloudServer imageCloudServer;
+    private ImageCloudConfigServer imageCloudServer;
 
     public String upload(byte[] file, String key, String db) {
         ImageCloud imageCloud = imageCloudServer.getImageCloudByWeight(db);

@@ -22,7 +22,7 @@ import java.util.Map;
 import java.util.Random;
 
 @Service
-public class ImageCloudServer implements InitializingBean {
+public class ImageCloudConfigServer implements InitializingBean {
 
     private static Table<String, Integer, ImageCloud> imageCloudTable = HashBasedTable.create();
     private static Map<String, List<Integer>> weightList = Maps.newHashMap();
